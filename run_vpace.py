@@ -32,7 +32,7 @@ parser.add_argument('--buffer_randomize_factor', type=float, default=0.0,
 parser.add_argument('--reward_scaling', type=float, default=0.1, help="Reward scaling.")
 
 # env
-parser.add_argument('--env_type', type=str, choices=['manipulator_learning', 'sawyer', 'hand_dapg'],
+parser.add_argument('--env_type', type=str, choices=['manipulator_learning', 'sawyer', 'hand_dapg', 'panda_rl_envs'],
                         default="manipulator_learning")
 parser.add_argument('--env_name', type=str, default="PandaPlayInsertTrayXYZState", help="Env name.")
 parser.add_argument('--main_task', type=str, default="stack", help="Main task (for play environment)")
@@ -48,6 +48,7 @@ parser.add_argument('--hand_dapg_dp_kwargs', type=str,
                     # default='control_hz:20,common_control_multiplier:.02,responsive_control:False,rotate_frame_ee:True,lower_mass:True,delta_pos:True,include_vel:False',
                     default='',
                     help="For overriding the defaults: e.g., 'control_hz:5,common_control_multiplier:.05'.")
+parser.add_argument('--panda_rl_envs_kwargs', type=str, default='', help="For overriding default env params.")
 
 # expert data
 parser.add_argument('--expert_data_mode', type=str, default="obs_only_no_next", help="options are [obs_act, obs_only, obs_only_no_next].")
@@ -105,8 +106,11 @@ parser.add_argument('--sqil_policy_reward_label', type=float, choices=[0.0, -1.0
                         help="Reward label for policy data in SQIL, if not using classifier.")
 parser.add_argument('--move_obj_filename', type=str, choices=['5_move.gz', '5_move_new.gz'], default='5_move_new.gz',
                     help="Name of move-object expert data file. new is a better match for 5hz env.")
-parser.add_argument('--q_over_max_penalty', type=float, default=0.0,
-                        help="If set, a multiplier on the q magnitude over the max possible q based on max reward of 1, "\
+parser.add_argument('--threshold_discriminator', action="store_true")
+parser.add_argument('--q_regularizer', type=str, choices=['vp', 'cql', 'c2f'], default="vp")
+parser.add_argument('--rnd', action="store_true", help="Enable RND")
+parser.add_argument('--q_over_max_penalty', type=float, default=10.0,
+                        help="If set, a multiplier on the q magnitude over the max possible q based on current expert avg/max, "\
                              "using reward_scaling and discount_factor")
 parser.add_argument('--qomp_num_med_filt', type=int, default=50,
                     help="For q over max penalty + discriminator reward, how many max discrim values to use for "
