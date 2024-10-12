@@ -1,4 +1,8 @@
-# Value-Penalized Auxiliary Control from Examples for Learning without Rewards or Demonstrations
+# Fast Reinforcement Learning without Rewards or Demonstrations via Auxiliary Task Examples
+
+<p align="center">
+  <img src="https://github.com/vpace-anon/vpace/blob/main/vpace-motivation-new-50.png" width="40%" >
+</p>
 
 This repository contains data, code, and instructions for reproducing the results from **v**alue-**p**enalized **a**uxiliary **c**ontrol from **e**xamples (VPACE).
 
